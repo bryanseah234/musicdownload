@@ -64,3 +64,7 @@
 - Concurrency hardening: Spotify task entry points share a non-blocking lock, so startup/scheduler/manual sync cannot stack multiple long Spotify runs. Startup now runs Spotify sync/backfill in parallel and starts the download drain without waiting for Spotify sync to finish.
 - Verification: py_compile passed for daemon/tasks/token tests; self-heal PowerShell syntax parses; targeted pytest passed 18 tests; full pytest passed 330 tests, 1 skipped, 3 existing warnings.
 - Live proof after final daemon recreate: /health/deep OK with scheduler_running=true; auth/status authenticated with token_degraded=false and about 0.99h left; downloads moved to 132635 downloaded, 1 downloading, 64082 pending; ListenBrainz poll still returned 0 new tracks from 100 recommendations.
+
+## 2026-09-10 - Portfolio persistence review
+
+Portfolio upkeep reviewed storage/session settings, provider backoff, backup rotation, frontend polling and fixture boundaries. All 77 tracked Python files parsed. PostgreSQL/media/OAuth/backup storage is separate from the Prawn Home widget and is not automatically Vercel/Supabase usage. Five/ten-second UI refreshes and the ten-plus-twenty database pool are review candidates, not measured cloud savings. No daemon, downloads, token refresh, scrobbling, notifications, media or private database records were accessed; prior live-state/test claims were not reverified.
